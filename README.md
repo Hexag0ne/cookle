@@ -7,7 +7,7 @@ To install the project at home, follow the instructions:
 
 1. Install Python 2.7
 2. Install pip
-3. Run the following command in this repo:
+3. Run the following command in the repo:
 
     pip install --user -r requirements.txt
 
