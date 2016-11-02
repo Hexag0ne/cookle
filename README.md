@@ -4,10 +4,11 @@ Semantic web project where we're creating a web platform to provide insightful s
 Install
 -------
 To install the project at home, follow the instructions:
-1- Install Python 2.7
-2- Install pip
-3- Run the following command in this repo:
-  pip install --user -r requirements.txt
+1. Install Python 2.7
+2. Install pip
+3. Run the following command in this repo:
+
+    `pip install --user -r requirements.txt`
 
 Modules
 -------
