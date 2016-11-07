@@ -5,16 +5,17 @@ import json
 @app.route('/', methods=['GET', 'POST'])
 def index():
 	if request.method == 'POST':
-		search = request.form['search']
-		return render_template('results.html', search = search)
+		return results()
 	else:
 		return render_template('index.html')
 	
 
 @app.route('/results', methods=['GET', 'POST'])
 def results():
-	if request.method == 'POST':
+	if request.method == 'POST' :
 		search = request.form['search']
+		if search == '': 
+			return render_template('index.html')
 		return render_template('results.html', search = search)
 	else:
 		return render_template('results.html')

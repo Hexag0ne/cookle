@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Hexagone Cooking</title>
+    <title>Cookle</title>
 
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}"  rel="stylesheet">
     <link href="{{ url_for('static', filename='css/style2.css') }}" rel="stylesheet">
@@ -31,21 +31,21 @@
               <br>
               <br>
               <br>
-              <h1><font color="white" face="helvetica">Cooking with Hexagone</font></h1>
+
+              <h1><a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/chef_1.png') }}"></a><font color="white" face="helvetica">&emsp;Cookle</font></h1>
               <form method="post" action="{{ url_for('index') }}">
                 <div id="custom-search-input">
                     <div class="input-group">
                       
-                        <input type="text" class="form-control input-lg" placeholder="Search" name="search"/>
-                       <span class="input-group-btn">
-                            <button class="btn btn-lg" type="submit" >
-                                <i class="glyphicon glyphicon-search"></i>
-                            </button>
+                      <input type="text" class="form-control input-lg" placeholder="Search" name="search"/>
+                        <span class="input-group-btn">
+                          <button class="btn btn-lg" type="submit" >
+                            <i class="glyphicon glyphicon-search"></i>
+                          </button>
                         </span>
-                        
                     </div>
                   </div> 
-                  </form> 
+              </form> 
             </div>
             <div class="col-md-2"></div>
         </div>
@@ -67,8 +67,8 @@
         </div>
 	    </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}" ></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
   </body>
 </html>
