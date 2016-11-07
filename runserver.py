@@ -1,3 +1,3 @@
-from recipes import app
-app.run(debug=True)
+from cookle import app
 
+app.run(debug=True)
