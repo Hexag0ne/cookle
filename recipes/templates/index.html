@@ -7,9 +7,9 @@
 
     <title>Hexagone Cooking</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style2.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="img/chef.png">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}"  rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style2.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/chef.png') }}" >
 
   </head>
   <body>
@@ -36,7 +36,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control input-lg" placeholder="Search" />
                         <span class="input-group-btn">
-                            <button class="btn btn-lg" type="button" onclick="window.location.href='results.html'">
+                            <button class="btn btn-lg" type="button" onclick="window.location.href='{{ url_for('results') }}'">
                                 <i class="glyphicon glyphicon-search"></i>
                             </button>
                         </span>
