@@ -1,0 +1,12 @@
+# Pour interroger DBpedia et trouver des prédicats
+http://dbpedia.org/snorql/
+
+
+# Pour appeler un endpoint sparql avec du python :
+https://rdflib.github.io/sparqlwrapper/
+
+-- 
+Requète renvoyant touts les prédicats liés à la ressource "Apple"
+SELECT * WHERE {
+:Apple ?p ?o
+}
