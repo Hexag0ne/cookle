@@ -1,14 +1,24 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from recipes import app
 import json
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-	return render_template('index.html')
+	if request.method == 'POST':
+		search = request.form['search']
+		return render_template('results.html', search = search)
+	else:
+		return render_template('index.html')
+	
 
-@app.route('/results')
+@app.route('/results', methods=['GET', 'POST'])
 def results():
-	return render_template('results.html')
+	if request.method == 'POST':
+		search = request.form['search']
+		return render_template('results.html', search = search)
+	else:
+		return render_template('results.html')
+
 
 if __name__ == '__main__':
 	app.run()

@@ -32,16 +32,20 @@
               <br>
               <br>
               <h1><font color="white" face="helvetica">Cooking with Hexagone</font></h1>
+              <form method="post" action="{{ url_for('index') }}">
                 <div id="custom-search-input">
                     <div class="input-group">
-                        <input type="text" class="form-control input-lg" placeholder="Search" />
-                        <span class="input-group-btn">
-                            <button class="btn btn-lg" type="button" onclick="window.location.href='{{ url_for('results') }}'">
+                      
+                        <input type="text" class="form-control input-lg" placeholder="Search" name="search"/>
+                       <span class="input-group-btn">
+                            <button class="btn btn-lg" type="submit" >
                                 <i class="glyphicon glyphicon-search"></i>
                             </button>
                         </span>
+                        
                     </div>
-                  </div>  
+                  </div> 
+                  </form> 
             </div>
             <div class="col-md-2"></div>
         </div>
