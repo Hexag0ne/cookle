@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from aylienapiclient import textapi
+import time
 
 client = textapi.Client("18d3d263", "6cb4cddc2c058473fb1984dcc30549ed")
 
@@ -10,20 +11,26 @@ DEFAULT_TIMEOUT = 5
 DEFAULT_PARAMS = {"type_recettes":0, "vegetarien":0, "alcool":0, "ustensiles":0, "porc": 0, "lait": 0, "type_rech": "mono", "nb_aliments_saisie": 3}
 
 def recipe_search(query=None):
+    t = time.time()
     my_params = DEFAULT_PARAMS.copy()
     my_params["texte_rech"] = query # Setting query in parameters
     result = requests.get(url=BASE_URL, params=my_params, timeout=DEFAULT_TIMEOUT)
     if result.status_code != 200:
         print "Error searching query (status_code != 200)"
-        return None
+        results = dict(error="No data found")
     else:
         soup = BeautifulSoup(result.text, "html.parser")
         links, types, durations = getLinks(soup), getTypes(soup), getDurations(soup)
         summaries = getSummaries(links)
+        exec_time = round(time.time()-t, 2)
         # search results
-        search_results = [dict(title=l["title"], website=l["href"], type=t, preparation_time=d, summary=s) for l,t,d,s in zip(links, types, durations, summaries)]
+        search_results = [dict(
+                        title=l["title"], website=l["href"], nb_results=len(links),
+                        type=t, preparation_time=d, summary=s, execution_time=exec_time
+                        )
+                        for l,t,d,s in zip(links, types, durations, summaries)]
         results = dict(search_results=search_results)
-        return results
+    return results
 
 def getSummaries(links):
     urls = [l["href"] for l in links]
