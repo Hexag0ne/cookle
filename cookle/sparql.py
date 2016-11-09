@@ -17,8 +17,7 @@ spar = SPARQLWrapper("http://dbpedia.org/sparql")
 spar.setQuery("""
 	SELECT ?comment WHERE {
 	<http://dbpedia.org/resource/Tajine> rdfs:comment ?comment
-	FILTER (lang(?comment) = 'en')
-
+	FILTER ((lang(?comment) = 'fr') OR (lang(?comment) = 'en'))
 }
 """)
 spar.setReturnFormat(JSON)
