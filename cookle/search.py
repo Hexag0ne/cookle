@@ -24,14 +24,14 @@ def recipe_search(query=None):
         soup = BeautifulSoup(result.text, "html.parser")
         links, types, durations = getLinks(soup), getTypes(soup), getDurations(soup)
         summaries = getSummaries(links)
-        exec_time = round(time.time()-t, 2)
+        exec_time = str(round(time.time()-t, 2))
         # search results
         search_results = [dict(
-                        title=l["title"], website=l["href"], nb_results=len(links),
-                        type=t, preparation_time=d, summary=s, execution_time=exec_time
+                        title=l["title"], website=l["href"],
+                        type=t, preparation_time=d, summary=s, 
                         )
                         for l,t,d,s in zip(links, types, durations, summaries)]
-        results = dict(search_results=search_results)
+        results = dict(search_results=search_results, execution_time=exec_time, query=query, nb_results=len(links))
     return results
 
 def getSummaries(links):
