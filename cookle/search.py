@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+from aylienapiclient import textapi
+
+client = textapi.Client("18d3d263", "6cb4cddc2c058473fb1984dcc30549ed")
 
 BASE_URL = "http://www.cuistot.org/recherche.php"
 DEFAULT_TIMEOUT = 5
@@ -16,10 +19,20 @@ def recipe_search(query=None):
     else:
         soup = BeautifulSoup(result.text, "html.parser")
         links, types, durations = getLinks(soup), getTypes(soup), getDurations(soup)
+        summaries = getSummaries(links)
         # search results
-        search_results = [dict(title=l["title"], website=l["href"], type=t, preparation_time=d) for l,t,d in zip(links, types, durations)]
+        search_results = [dict(title=l["title"], website=l["href"], type=t, preparation_time=d, summary=s) for l,t,d,s in zip(links, types, durations, summaries)]
         results = dict(search_results=search_results)
         return results
+
+def getSummaries(links):
+    urls = [l["href"] for l in links]
+    summaries = [extractText(url) for url in urls]
+    return summaries
+
+def extractText(url);
+    extract = client.Extract({"url": url, "best_image": False, "language":"fr"})
+    return extract["article"]
 
 def getDurations(soup):
     # durations
