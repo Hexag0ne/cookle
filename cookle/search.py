@@ -37,7 +37,7 @@ def getSummaries(links):
     summaries = [extractText(url) for url in urls]
     return summaries
 
-def extractText(url);
+def extractText(url):
     extract = client.Extract({"url": url, "best_image": False, "language":"fr"})
     return extract["article"]
 
