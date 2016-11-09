@@ -74,14 +74,13 @@
 				<br>
 				<br>
 				<br>
-				<br>
 				{% for search_result in results.search_results %}
 				<div class="media">
 						<div class="media-body">
 							<h4 class="media-heading">
 								<a href="http://{{ search_result.website }}" style="color:#E88309">{{ search_result.title }}</a>
 							</h4> 
-							<font color="#808080">{{ search_result.cooking_time }}. {{ search_result.type }}.</font>
+							<font color="#808080">Temps de préparation : {{ search_result.preparation_time }}. {{ search_result.type }}.</font>
 							<br>{{ search_result.summary }}
 							<br><i><font color="#808080">{{ search_result.website }}</font></i>
 						</div>

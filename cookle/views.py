@@ -27,9 +27,9 @@ def results():
 										],
 							search_results=[dict(
 								title="Tarte au chocolat", 
-								summary=u"Faire une compote : les mettre dans une casserole avec un peu d'eau (1 verre ou 2). Bien remuer. Quand les pommes commencent a ramollir, ajouter un sachet ...", 
+								summary=u"Faire une compote : les mettre dans une casserole avec un peu d'eau (1 verre ou 2). Bien remuer. Quand les pommes commencent a ramollir, ajouter un sachet de levure et remuer jusqu'à ébullition...", 
 								website="www.marmiton.org", 
-								cooking_time=u"Temps de préparation : 20 minutes",
+								preparation_time=u"20 minutes",
 								type=u"Végétarien") for _ in range(5)],
 							description_en="",
 							description_fr=u"La tarte aux pommes est une variété de tarte sucrée, faite d'une pâte feuilletée ou brisée garnie de pommes émincées. Cette tarte peut être dégustée chaude, tiède ou froide. C'est la tarte officielle de l'état du Vermont, aux États-Unis.",
