@@ -12,16 +12,20 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 #for result in results["results"]["bindings"]:
 #    print(result["label"]["value"])
 
+def getDescriptionAnglais(uri):
+	spar = SPARQLWrapper("http://dbpedia.org/sparql")
+	spar.setQuery("""
+	SELECT ?comment WHERE { """ + uri + 
+	"""	rdfs:comment ?comment
+	FILTER (lang(?comment) = 'en')
+	} """)
+	spar.setReturnFormat(JSON)
+	resul = spar.query().convert()
 
-spar = SPARQLWrapper("http://dbpedia.org/sparql")
-spar.setQuery("""
-	SELECT ?comment WHERE {
-	<http://dbpedia.org/resource/Tajine> rdfs:comment ?comment
-	FILTER ((lang(?comment) = 'fr') OR (lang(?comment) = 'en'))
-}
-""")
-spar.setReturnFormat(JSON)
-resul = spar.query().convert()
+#	for resultat in resul["results"]["bindings"]:
+#		print(resultat["comment"]["value"])
+	print(resul["results"]["bindings"][0]["comment"]["value"])
+	return resul["results"]["bindings"][0]["comment"][value"]
 
-for resultat in resul["results"]["bindings"]:
-	print(resultat["comment"]["value"])
+
+fic["description_en"] = getDescriptionAnglais(uri)
