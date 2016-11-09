@@ -10,3 +10,13 @@ Requète renvoyant touts les prédicats liés à la ressource "Apple"
 SELECT * WHERE {
 :Apple ?p ?o
 }
+
+--
+Juliette veut (en Json)
+_ pour chaque URL :
+	Titre (avec le nom du site)
+	Début du texte de la recette
+	Ingrédients principaux
+
+_ pour le snippet :
+	informations sur la recette : (description générale disponible sur wikipedia) *À faire en premier

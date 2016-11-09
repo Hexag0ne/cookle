@@ -60,11 +60,11 @@
 
 			<div class="row">
 				<div class="col-md-1"></div>
-				<div class="col-md-2"><font color="#ffa500">Web</font></div>
-				<div class="col-md-2"><font color="#ffa500">Simple</font></div>
-				<div class="col-md-2"><font color="#ffa500">All Time</font></div>
-				<div class="col-md-2"><font color="#ffa500">Orange</font></div>
-				<div class="col-md-2"><b>54,000,000,000</b></div>
+				<div class="col-md-2"><font color="#E88309">Web</font></div>
+				<div class="col-md-2"><font color="#E88309">Simple</font></div>
+				<div class="col-md-2"><font color="#E88309">All Time</font></div>
+				<div class="col-md-2"><font color="#E88309">Orange</font></div>
+				<div class="col-md-2"><b>{{ results.nb_results }}</b></div>
 			</div>
 		</div>
 
@@ -75,13 +75,15 @@
 				<br>
 				<br>
 				<br>
-				{% for result in results %}
+				{% for search_result in results.search_results %}
 				<div class="media">
 						<div class="media-body">
 							<h4 class="media-heading">
-								{{ result.title }}
-							</h4> Pelez et coupez les pommes en fines tranches et disposez-les sur le fond de tarte. Dans un saladier, mélangez le sucre, la crème fraîche, les oeufs, le sucre ...
-							<br><i><font color="#808080">{{ result.website }}</font></i>
+								<a href="http://{{ search_result.website }}" style="color:#E88309">{{ search_result.title }}</a>
+							</h4> 
+							<font color="#808080">{{ search_result.cooking_time }}. {{ search_result.type }}.</font>
+							<br>{{ search_result.summary }}
+							<br><i><font color="#808080">{{ search_result.website }}</font></i>
 						</div>
 				</div>
 				<br>
@@ -93,32 +95,47 @@
 				<br>
 				<br>
 				<br>
-						
-				<p>Tarte aux pommes</p>
-				<p>Tarte aux poires</p>
-				<p>Tarte au chocolat</p>
-				<p>Pommes vertes</p>
-				<p>Dessert aux fruits</p>
+
+				<img src="{{ results.image_url }}" alt="Image_url" style="width:304px;height:228px;">
+
+				<br> 
+				<br>
+				<b>Description</b>
+				<br>
+				<br>
+				{% if results.description_en %}
+					{{ results.description_en }}
+				{% elif results.description_fr %}
+					{{ results.description_fr }}
+				{% endif %}
 
 				<br>
 				<br>
 
-				<b>La tarte aux pommes</b> est une variété de tarte sucrée, faite d'une pâte feuilletée ou brisée garnie de pommes émincées. Cette tarte peut être dégustée chaude, tiède ou froide. C'est la tarte officielle de l'état du Vermont, aux États-Unis. Wikipédia
+				<b>Ingredients</b>
+				<br>
+				{% for ingredient in results.ingredients %}
+				<div class="media">
+				 <a href="#" class="pull-left"><img alt="Bootstrap Media Preview" src="{{ ingredient.image_url }}" class="media-object" style="width:30px;height:30px;"/></a>
+				<div class="media-body">
+					<h4 class="media-heading">
+						{{ ingredient.name }}
+					</h4> {{ ingredient.quantity }}
+				</div>
+			</div>
+				{% endfor %}
+				<br>
+
+				<b> Similar recipes </b>
+				<br>
+				<br>
+				{% for similar_recipe in results.similar_recipes %}
+					<p>{{ similar_recipe }} </p>
+				{% endfor %}
 
 				<br>
 				<br>
 
-				<b>Informations nutritionnelles</b>
-				Valeur pour  100 grammes
-				Calories 237
-				Lipides 11 g	
-				Acides gras saturés 3,8 g	
-				Acides gras poly-insaturés 2,2 g	
-				Acides gras mono-insaturés 4,4 g	
-				Cholestérol 0 mg	
-				Sodium 266 mg	
-				Potassium 65 mg	
-				Glucides 34 g
 			</div>
 
 			<div class="col-md-1"></div>
