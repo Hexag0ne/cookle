@@ -14,6 +14,15 @@
   </head>
   <body>
 
+  	<script>
+  	$(function(color) {
+   var links = $('a.link').click(function() {
+       $(this).addClass('active');
+   });
+});
+  	</script>
+
+
     <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -31,7 +40,7 @@
 					<br>
 					<br>
 					<br>
-					<form method="post" action="{{ url_for('index') }}">
+					<form method="get" action="{{ url_for('index') }}">
 					<div id="custom-search-input">
 		                <div class="input-group col-md-12">
 		                    <input type="text" class="form-control input-lg" placeholder="{{ search }}" name="search" />
@@ -51,19 +60,19 @@
 				<br>
 				<br>
 				<div class="col-md-1"></div>
-				<div class="col-md-2"><i>search type</i></div>
-				<div class="col-md-2"><i>search view</i></div>
-				<div class="col-md-2"><i>narrow by date</i></div>
-				<div class="col-md-2"><i>bing color</i></div>
+				<div class="col-md-2"><i>about</i></div>
+				<div class="col-md-2"><i>query</i></div>
+				<div class="col-md-2"><i>cookle color</i></div>
+				<div class="col-md-2"><i>execution time</i></div>
 				<div class="col-md-2"><i>results</i></div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-1"></div>
-				<div class="col-md-2"><font color="#E88309">Web</font></div>
-				<div class="col-md-2"><font color="#E88309">Simple</font></div>
-				<div class="col-md-2"><font color="#E88309">All Time</font></div>
-				<div class="col-md-2"><font color="#E88309">Orange</font></div>
+				<div class="col-md-2"><font color="#E88309"><div title="Cookle is a search engine for cooking recipes.">Cookle</div></font></div>
+				<div class="col-md-2"><font color="#E88309">{{ results.query }}</font></div>
+				<div class="col-md-2"><font color="#E88309" onclick="chBackcolor('orange');">♥</font> <font color="blue">♥</font> <font color="green">♥</font> <font color="red">♥</font></div>
+				<div class="col-md-2"><b>{{ results.execution_time }} seconds</b></div>
 				<div class="col-md-2"><b>{{ results.nb_results }}</b></div>
 			</div>
 		</div>
@@ -78,9 +87,9 @@
 				<div class="media">
 						<div class="media-body">
 							<h4 class="media-heading">
-								<a href="http://{{ search_result.website }}" style="color:#E88309">{{ search_result.title }}</a>
+								<a href="{{ search_result.website }}" style="color:#E88309">{{ search_result.title }}</a>
 							</h4> 
-							<font color="#808080">Temps de préparation : {{ search_result.preparation_time }}. {{ search_result.type }}.</font>
+							<font color="#808080">Temps de préparation: {{ search_result.preparation_time }}. {{ search_result.type }}.</font>
 							<br>{{ search_result.summary }}
 							<br><i><font color="#808080">{{ search_result.website }}</font></i>
 						</div>
@@ -129,7 +138,7 @@
 				<br>
 				<br>
 				{% for similar_recipe in results.similar_recipes %}
-					<p>{{ similar_recipe }} </p>
+					<a href="{{ url_for('index', search=similar_recipe) }}"  style="color:#E88309"><p>{{ similar_recipe }} </p></a>
 				{% endfor %}
 
 				<br>

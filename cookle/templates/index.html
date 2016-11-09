@@ -33,10 +33,9 @@
               <br>
 
               <h1><a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/chef_1.png') }}"></a><font color="white" face="helvetica">&emsp;Cookle</font></h1>
-              <form method="post" action="{{ url_for('index') }}">
+              <form method="get" action="{{ url_for('index') }}">
                 <div id="custom-search-input">
                     <div class="input-group">
-                      
                       <input type="text" class="form-control input-lg" placeholder="Search" name="search"/>
                         <span class="input-group-btn">
                           <button class="btn btn-lg" type="submit" >
