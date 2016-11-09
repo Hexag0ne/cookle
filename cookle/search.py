@@ -17,7 +17,7 @@ def recipe_search(query=None):
         html_doc = result.text
         soup = BeautifulSoup(html_doc, "html.parser")
         results = soup("a", "gras")
-        results = [r["title"] for r in results]
+        results = [dict(title=r["title"], website="fake_website.com") for r in results]
         return results
 
 if __name__ == "__main__":
