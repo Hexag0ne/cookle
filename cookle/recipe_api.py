@@ -46,7 +46,7 @@ def getIngredients(recipe):
 
     """ Uri de la recette récupéré grâce à l'api DBPedia Spotlight """
     try:
-        annotation = spotlight.annotate('http://spotlight.sztaki.hu:2225/rest/annotate',text=recipe,confidence=0.1, support=20,spotter='Default')
+        annotation = spotlight.annotate('http://spotlight.sztaki.hu:2222/rest/annotate',text=recipe_tr,confidence=0.1, support=20,spotter='Default')
         uri_recette = annotation[0]['URI']
     except:
         uri_recette = None
