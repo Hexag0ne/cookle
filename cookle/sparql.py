@@ -33,6 +33,20 @@ def getDescription(uri, langue="fr"):
     # description can be None
     return res["results"]["bindings"][0]["comment"]["value"]
 
+def getImage(uri):
+    """Permet de récupérer l'image d'un ingrédient ou une recette """
+    spar = SPARQLWrapper("http://dbpedia.org/sparql")
+    uri = "<{}>".format(uri)
+    spar.setQuery("""
+    SELECT * WHERE { """ + uri + 
+    """  <http://dbpedia.org/ontology/thumbnail> ?uriImage
+    } """)
+    spar.setReturnFormat(JSON)
+    res = spar.query().convert()
+    if len(res["results"]["bindings"]) == 0:
+        return None
+    return res["results"]["bindings"][0]["uriImage"]["value"]
+
 if __name__ == "__main__":
     # do stuff if : python sparql.py
     print(getDescription("http://dbpedia.org/resource/Tajine","en"))
