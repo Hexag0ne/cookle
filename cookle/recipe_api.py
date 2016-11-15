@@ -2,6 +2,7 @@
 import requests
 import json
 import spotlight
+import goslate
 from sparql import getNomFrancais
 
 """Liste des ingredients. Chaque ingrédient est défini par une liste composée de son nom,de sa proportion et de l'unité de mesure. Donc c'est une liste de listes. """
@@ -14,7 +15,9 @@ motcle ='cake'
 """ fichier de retour JSON """
 
 def getIngredients(recipe):
-    requette="https://api.edamam.com/search?q={0}&app_id=0806efd4&app_key=13a926d1babeb8a3726cc3eead90e57c&from=0&to=3".format(recipe)
+    gs = goslate.Goslate()
+    recipe_tr = gs.translate( recipe, 'en')
+    requette="https://api.edamam.com/search?q={0}&app_id=0806efd4&app_key=13a926d1babeb8a3726cc3eead90e57c&from=0&to=3".format(recipe_tr)
     resultat = requests.get(requette)
     resultat = resultat.json()
     ingredients = resultat['hits'][0]['recipe']['ingredients']
