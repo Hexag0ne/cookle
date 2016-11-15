@@ -11,25 +11,58 @@
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/chef.png') }}" >
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<style>
+		.loader {
+		  border: 16px solid #f3f3f3;
+		  border-radius: 50%;
+		  border-top: 16px solid #3498db;
+		  width: 120px;
+		  height: 120px;
+		  -webkit-animation: spin 2s linear infinite;
+		  animation: spin 2s linear infinite;
+		}
+
+		@-webkit-keyframes spin {
+		  0% { -webkit-transform: rotate(0deg); }
+		  100% { -webkit-transform: rotate(360deg); }
+		}
+
+		@keyframes spin {
+		  0% { transform: rotate(0deg); }
+		  100% { transform: rotate(360deg); }
+		}
+	</style>
   </head>
+  
+
   <body>
-
   	<script>
-/*  	var current_color = "#E88309";
+  	/* This variable contains the theme color of the webpage */
+  	current_color = "";
 
-  	$(document).ready(function() { 
+  	/* This function changes the theme color of the webpage when the page loads. */ 
+  	window.onload = function() { 
+  		/* Modal when page loads */
+  		$('#myModal').modal('show');
+  		if (localStorage.getItem(current_color) == null){
+  			localStorage.setItem(current_color, "#E88309");
+  		}
+
 		var links = document.getElementsByTagName("a");
 		for(var i=0;i<links.length;i++)
 	    {
 	        if(links[i].href)
 	        {
-	            links[i].style.color = current_color;
-	            } 
+	            links[i].style.color = localStorage.getItem(current_color);
 	        }
 	    }  
-  	});*/
+	    $('#myModal').modal('hide');
+  	}
 
-  	function chColor(color)
+	/* This function changes the theme color of the webpage when a user clicks on the apples. */  	
+	function chColor(color)
 	{
 	    var links = document.getElementsByTagName("a");
 	    for(var i=0;i<links.length;i++)
@@ -37,12 +70,29 @@
 	        if(links[i].href)
 	        {
 	            links[i].style.color = color;
-	           
 	        }
 	    }  
+	    localStorage.setItem(current_color, color);
 	}
   	</script>
 
+	<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">Fetching results</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>Please wait a few seconds&hellip;</p>
+	        <div class="loader"></div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
     <div class="container-fluid">
 	<div class="row">
@@ -93,10 +143,10 @@
 				<div class="col-md-2"><font color="#E88309"><a href="" style="color:#E88309">Hexagone</a></font></div>
 				<div class="col-md-2"><font color="#E88309"><a href="" style="color:#E88309">{{ results.query }}</a></font></div>
 				<div class="col-md-2">
-					<a style="color:#E88309" onclick="chColor('#E88309');">♥</a>
-					<a style="color:#428bca" onclick="chColor('#428bca');">♥</a>
-					<a style="color:#5cb85c" onclick="chColor('#5cb85c');">♥</a>
-					<a style="color:#d9534f" onclick="chColor('#d9534f');">♥</a>
+					<a style="color:#E88309" onclick="chColor('#E88309');"></a>
+					<a style="color:#428bca" onclick="chColor('#428bca');"></a>
+					<a style="color:#5cb85c" onclick="chColor('#5cb85c');"></a>
+					<a style="color:#d9534f" onclick="chColor('#d9534f');"></a>
 
 				</div>
 				<div class="col-md-2"><b>{{ results.execution_time }} seconds</b></div>
@@ -118,7 +168,7 @@
 							</h4> 
 							<font color="#808080">Temps de préparation: {{ search_result.preparation_time }}. {{ search_result.type }}.</font>
 							<br>{{ search_result.summary }}
-							<br><i><font color="#808080">{{ search_result.website }}</font></i>
+							<br><i><a href="{{ search_result.website }}" style="color:#E88309">{{ search_result.website }}</a></font></i>
 						</div>
 				</div>
 				<br>
@@ -138,10 +188,10 @@
 				<b>Description</b>
 				<br>
 				<br>
-				{% if results.description_en %}
-					{{ results.description_en }}
-				{% elif results.description_fr %}
+				{% if results.description_fr %}
 					{{ results.description_fr }}
+				{% elif results.description_en %}
+					{{ results.description_en }}
 				{% endif %}
 
 				<br>
@@ -155,7 +205,7 @@
 				<div class="media-body">
 					<h4 class="media-heading">
 						{{ ingredient.name }}
-					</h4> {{ ingredient.quantity }}
+					</h4> {{ ingredient.quantity }} {{ ingredient.unit }}
 				</div>
 			</div>
 				{% endfor %}
