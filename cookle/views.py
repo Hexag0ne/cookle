@@ -21,8 +21,8 @@ def results():
 		if search == '': 
 			return render_template('index.html')
 		else:
-			#results = recipe_search(query=search)
-			results = dict(query=search,
+			results = recipe_search(query=search)
+			'''results = dict(query=search,
 							ingredients=[dict(name="Pomme", quantity=u"5 unités", image_url=u"http://lasantedansmonassiette.com/wp-content/uploads/2012/07/pomme-fruit-prefere.jpg"),
 										dict(name="Beurre", quantity=u"700 grammes", image_url=u"http://www.didier-beurre.fr/images/beurre.jpg"),
 										dict(name="Cannelle", quantity=u"3 pincées", image_url=u"http://ileauxepices.com/60-thickbox/cannelle.jpg"),
@@ -38,7 +38,7 @@ def results():
 							image_url="https://www.latableadessert.fr/asset-library/publishingimages/desserts/615x460/7502.jpg",
 							similar_recipes=["Tarte aux pommes", "Tarte aux poires", "Tarte au chocolat", "Pommes vertes","Dessert aux fruits"],
 							execution_time="0,37",
-							nb_results="54,000,000,000")
+							nb_results="54,000,000,000")'''
 			return render_template('results.html', results=results)
 	else:
 		return render_template('results.html')
