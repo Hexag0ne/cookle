@@ -9,11 +9,6 @@ from bs4 import BeautifulSoup
 import re
 import time
 
-from microsofttranslator import Translator
-
-client_id = "COOKLE"
-client_secret = "oiFjSAeSmeP1sNfe1i5Au162lYcm0HCtqMcAdgDQgJM="
-translator = Translator(client_id, client_secret)
 
 ACTIVATE_API = False
 if ACTIVATE_API:
@@ -36,8 +31,7 @@ def recipe_search(query=None):
         soup = BeautifulSoup(result.text, "html.parser")
         links, types, durations = getLinks(soup), getTypes(soup), getDurations(soup)
         summaries = getSummaries(links)
-        query_tr = translator.translate(query, "en")
-        recipe_res = getIngredients(query_tr)
+        recipe_res = getIngredients(query)
         list_ingredients = recipe_res["list_ingredients"]
         uri = recipe_res["uri"]
         description_fr = getDescription(uri=uri, langue="fr")
