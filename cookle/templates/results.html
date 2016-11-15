@@ -13,13 +13,39 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-  </head>
-  <body>
+	<style>
+		.loader {
+		  border: 16px solid #f3f3f3;
+		  border-radius: 50%;
+		  border-top: 16px solid #3498db;
+		  width: 120px;
+		  height: 120px;
+		  -webkit-animation: spin 2s linear infinite;
+		  animation: spin 2s linear infinite;
+		}
 
+		@-webkit-keyframes spin {
+		  0% { -webkit-transform: rotate(0deg); }
+		  100% { -webkit-transform: rotate(360deg); }
+		}
+
+		@keyframes spin {
+		  0% { transform: rotate(0deg); }
+		  100% { transform: rotate(360deg); }
+		}
+	</style>
+  </head>
+  
+
+  <body>
   	<script>
+  	/* This variable contains the theme color of the webpage */
   	current_color = "";
+
   	/* This function changes the theme color of the webpage when the page loads. */ 
   	window.onload = function() { 
+  		/* Modal when page loads */
+  		$('#myModal').modal('show');
   		if (localStorage.getItem(current_color) == null){
   			localStorage.setItem(current_color, "#E88309");
   		}
@@ -32,9 +58,10 @@
 	            links[i].style.color = localStorage.getItem(current_color);
 	        }
 	    }  
+	    $('#myModal').modal('hide');
   	}
 
-	/* This function changes the theme color of the webpage. */  	
+	/* This function changes the theme color of the webpage when a user clicks on the apples. */  	
 	function chColor(color)
 	{
 	    var links = document.getElementsByTagName("a");
@@ -49,6 +76,23 @@
 	}
   	</script>
 
+	<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">Fetching results</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>Please wait a few seconds&hellip;</p>
+	        <div class="loader"></div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
     <div class="container-fluid">
 	<div class="row">
@@ -144,10 +188,10 @@
 				<b>Description</b>
 				<br>
 				<br>
-				{% if results.description_en %}
-					{{ results.description_en }}
-				{% elif results.description_fr %}
+				{% if results.description_fr %}
 					{{ results.description_fr }}
+				{% elif results.description_en %}
+					{{ results.description_en }}
 				{% endif %}
 
 				<br>
