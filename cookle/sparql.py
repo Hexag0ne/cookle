@@ -7,7 +7,7 @@ def test():
 
 
 
-def getDescription(uri,langue):
+def getDescription(uri,langue="fr"):
 	"""Permet de récupérer la description d'une ressource dbpedia dans la langue souhaitée """
 	spar = SPARQLWrapper("http://dbpedia.org/sparql")
 	spar.setQuery("""

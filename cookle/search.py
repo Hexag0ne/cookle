@@ -1,4 +1,5 @@
 import requests
+from multiprocessing import Process
 from bs4 import BeautifulSoup
 import re
 import time
@@ -6,7 +7,8 @@ import time
 ACTIVATE_API = False
 if ACTIVATE_API:
     from aylienapiclient import textapi
-    client = textapi.Client("18d3d263", "6cb4cddc2c058473fb1984dcc30549ed")    
+    client = textapi.Client("18d3d263", "6cb4cddc2c058473fb1984dcc30549ed")
+       
 
 BASE_URL = "http://www.cuistot.org/recherche.php"
 DEFAULT_TIMEOUT = 5
@@ -39,7 +41,8 @@ def getSummaries(links):
     if ACTIVATE_API:
         summaries = [extractText(url) for url in urls]
     else:
-        summaries = [requests.get(url).text[:250] for url in urls]
+        summaries = ["//EXTRACTED_TEXT//" for url in urls]
+        #summaries = [requests.get(url) for url in urls]
     return summaries
 
 def extractText(url):
