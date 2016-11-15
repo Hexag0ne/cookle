@@ -17,7 +17,7 @@ motcle ='cake'
 def getIngredients(recipe):
     gs = goslate.Goslate()
     recipe_tr = gs.translate( recipe, 'en')
-    requette="https://api.edamam.com/search?q={0}&app_id=0806efd4&app_key=13a926d1babeb8a3726cc3eead90e57c&from=0&to=3".format(recipe_tr)
+    requette="https://api.edamam.com/search?q={0}&app_id=0806efd4&app_key=13a926d1babeb8a3726cc3eead90e57c&from=0&to=3&diet=balanced".format(recipe_tr)
     resultat = requests.get(requette)
     resultat = resultat.json()
     ingredients = resultat['hits'][0]['recipe']['ingredients']
