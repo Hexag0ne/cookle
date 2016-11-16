@@ -3,14 +3,14 @@ import requests
 import json
 import spotlight
 import goslate
-from sparql import getNomFrancais
+from sparql import getNomFrancais,getTypeRecette,getRecetteSimilaire
 
 """Liste des ingredients. Chaque ingrédient est défini par une liste composée de son nom,de sa proportion et de l'unité de mesure. Donc c'est une liste de listes. """
 list_ingredients = []
 """Liste des Uris (ressources) des ingrédients obtenus à partir de l'api DBPedia Spotlight""" 
 list_Uri = []
 """ A récuperer / input clavier"""
-motcle ='cake'
+
 """ url de l'api pour faire la recherche, on reçoit un objet JSON """
 """ fichier de retour JSON """
 
@@ -46,11 +46,13 @@ def getIngredients(recipe):
 
     """ Uri de la recette récupéré grâce à l'api DBPedia Spotlight """
     try:
-        annotation = spotlight.annotate('http://spotlight.sztaki.hu:2222/rest/annotate',text=recipe_tr,confidence=0.1, support=20,spotter='Default')
+        annotation = spotlight.annotate('http://spotlight.sztaki.hu:2222/rest/annotate',text=recipe_tr,confidence=0.5, support=20,spotter='Default')
         uri_recette = annotation[0]['URI']
+        type_rectte_uri = getTypeRecette(uri_recette)
+        recettes_similaires= getRecetteSimilaire(type_rectte_uri)
     except:
         uri_recette = None
 
     # uri can be None
-    recette = dict(list_ingredients=list_ingredients, uri=uri_recette)
+    recette = dict(list_ingredients=list_ingredients, uri=uri_recette,similar_recipes=recettes_similaires)
     return recette
