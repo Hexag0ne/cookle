@@ -1,6 +1,20 @@
 # coding=utf-8
 from SPARQLWrapper import SPARQLWrapper, JSON
 
+def getNomAnglais(uri):
+    """Permet de récupérer le nom des ingrédients en français à partir des uri de la ressource en anglais"""
+    spar = SPARQLWrapper("http://dbpedia.org/sparql")
+    spar.setQuery("""
+    SELECT ?label WHERE { """ + uri + 
+    """    rdfs:label ?label
+    FILTER (lang(?label) = "en")
+    } """)
+    spar.setReturnFormat(JSON)
+    res = spar.query().convert()
+    if len(res["results"]["bindings"]) == 0:
+        return None
+    return res["results"]["bindings"][0]["label"]["value"]
+
 def getNomFrancais(uri):
     """Permet de récupérer le nom des ingrédients en français à partir des uri de la ressource en anglais"""
     spar = SPARQLWrapper("http://dbpedia.org/sparql")
@@ -13,7 +27,7 @@ def getNomFrancais(uri):
     spar.setReturnFormat(JSON)
     res = spar.query().convert()
     if len(res["results"]["bindings"]) == 0:
-        return None
+        return getNomAnglais(uri)
     return res["results"]["bindings"][0]["label"]["value"]
 
 def getDescription(uri, langue="fr"):
@@ -39,15 +53,56 @@ def getImage(uri):
     uri = "<{}>".format(uri)
     spar.setQuery("""
     SELECT * WHERE { """ + uri + 
-    """  <http://dbpedia.org/ontology/thumbnail> ?uriImage
+    """  <http://dbpedia.org/ontology/thumbnail> ?o
     } """)
     spar.setReturnFormat(JSON)
     res = spar.query().convert()
     if len(res["results"]["bindings"]) == 0:
         return None
-    return res["results"]["bindings"][0]["uriImage"]["value"]
+    return res["results"]["bindings"][0]["o"]["value"]
+
+def getTypeRecette(uri):
+    """Permet de récupérer le type de la recette """
+    spar = SPARQLWrapper("http://dbpedia.org/sparql")
+    uri = "<{}>".format(uri)
+    spar.setQuery("""
+    SELECT * WHERE { """ + uri + 
+    """  <http://dbpedia.org/ontology/type> ?o
+    } """)
+    spar.setReturnFormat(JSON)
+    res = spar.query().convert()
+    if len(res["results"]["bindings"]) == 0:
+        return None
+    return res["results"]["bindings"][0]["o"]["value"]
+
+def getRecetteSimilaire(uri):
+    """Permet de récupérer les recettes similaires"""
+    if uri=None:
+        return None
+    spar = SPARQLWrapper("http://dbpedia.org/sparql")
+    uri = "<{}>".format(uri)
+    spar.setQuery("""
+    SELECT * WHERE {  ?s <http://dbpedia.org/ontology/type> """ + uri + 
+    """ 
+    } """)
+    spar.setReturnFormat(JSON)
+    res = spar.query().convert()
+    list_recettes_similaires=[]
+    if len(res["results"]["bindings"]) == 0:
+        return None
+    i=0
+    for i in range(0,5):
+        nom_recette = getNomFrancais(res["results"]["bindings"][i]["s"]["value"] )
+        image_recette = getImage (res["results"]["bindings"][i]["s"]["value"] )
+        list_recettes_similaires.append(dict(nom_recette=nom_recette,image_recette=image_recette))
+        i+=1
+
+    recettes_similaire=dict(similar_recipes=list_recettes_similaires)
+    return    recettes_similaire 
 
 if __name__ == "__main__":
     # do stuff if : python sparql.py
     print(getDescription("http://dbpedia.org/resource/Tajine","en"))
     print(getNomFrancais("http://dbpedia.org/resource/Soup"))
+
+
