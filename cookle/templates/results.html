@@ -41,11 +41,12 @@
   	<script>
   	/* This variable contains the theme color of the webpage */
   	current_color = "";
+  	/* Show loading modal */
+  	$('#myModal').modal('show');
 
   	/* This function changes the theme color of the webpage when the page loads. */ 
   	window.onload = function() { 
   		/* Modal when page loads */
-  		$('#myModal').modal('show');
   		if (localStorage.getItem(current_color) == null){
   			localStorage.setItem(current_color, "#E88309");
   		}
@@ -58,6 +59,7 @@
 	            links[i].style.color = localStorage.getItem(current_color);
 	        }
 	    }  
+	    /* Hide loading modal */
 	    $('#myModal').modal('hide');
   	}
 
