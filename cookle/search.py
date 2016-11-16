@@ -9,7 +9,6 @@ from bs4 import BeautifulSoup
 import re
 import time
 
-
 ACTIVATE_API = False
 if ACTIVATE_API:
     from aylienapiclient import textapi
@@ -33,6 +32,8 @@ def recipe_search(query=None):
         summaries = getSummaries(links)
         recipe_res = getIngredients(query)
         list_ingredients = recipe_res["list_ingredients"]
+        recettes_similaires = recipe_res["similar_recipes"]
+        print(recettes_similaires)
         uri = recipe_res["uri"]
         description_fr = getDescription(uri=uri, langue="fr")
         description_en = getDescription(uri=uri, langue="en")
@@ -47,7 +48,7 @@ def recipe_search(query=None):
         results = dict(search_results=search_results, execution_time=exec_time,
                        query=query, nb_results=len(search_results),
                        ingredients=list_ingredients, description_en=description_en,
-                       description_fr=description_fr, image_url=image_url)
+                       description_fr=description_fr,similar_recipes=recettes_similaires)
     return results
 
 def getSummaries(links):
