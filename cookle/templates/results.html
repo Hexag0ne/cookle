@@ -131,11 +131,11 @@
 				<br>
 				<br>
 				<div class="col-md-1"></div>
-				<div class="col-md-2"><i>powered by</i></div>
-				<div class="col-md-2"><i>query</i></div>
-				<div class="col-md-2"><i>cookle color</i></div>
-				<div class="col-md-2"><i>execution time</i></div>
-				<div class="col-md-2"><i>results</i></div>
+				<div class="col-md-2"><i>conçu avec amour par</i></div>
+				<div class="col-md-2"><i>requête</i></div>
+				<div class="col-md-2"><i>couleur choisie</i></div>
+				<div class="col-md-2"><i>temps d'exécution</i></div>
+				<div class="col-md-2"><i>résultats</i></div>
 			</div>
 
 			<div class="row">
@@ -180,9 +180,11 @@
 				<br>
 				<br>
 				<br>
-
-				<img src="{{ results.image_url }}" alt="Image_url" style="width:304px;height:228px;">
-
+				{% if results.image_url %}
+					<img src="{{ results.image_url }}" alt="Image_url" style="width:304px;height:228px;">
+				{% else %}
+					<font color="#808080">Pas d'image trouvée.</font>
+				{% endif %}
 				<br> 
 				<br>
 				<b>Description</b>
@@ -192,32 +194,40 @@
 					{{ results.description_fr }}
 				{% elif results.description_en %}
 					{{ results.description_en }}
+				{% else %}
+					<font color="#808080">Pas de description trouvée.</font>
 				{% endif %}
 
 				<br>
 				<br>
 
-				<b>Ingredients</b>
+				<b>Ingrédients</b>
 				<br>
-				{% for ingredient in results.ingredients %}
-				<div class="media">
-				 <a href="#" class="pull-left"><img alt="Bootstrap Media Preview" src="{{ ingredient.image_url }}" class="media-object" style="width:30px;height:30px;"/></a>
-				<div class="media-body">
-					<h4 class="media-heading">
-						{{ ingredient.name }}
-					</h4> {{ ingredient.quantity }} {{ ingredient.unit }}
-				</div>
-			</div>
+				{% if results.ingredients|length > 0 %}
+					{% for ingredient in results.ingredients %}
+						<div class="media">
+						 <a href="#" class="pull-left"><img alt="Bootstrap Media Preview" src="{{ ingredient.image_url }}" class="media-object" style="width:30px;height:30px;"/></a>
+						<div class="media-body">
+							<h4 class="media-heading">
+								{{ ingredient.name }}
+							</h4> {{ ingredient.quantity }} {{ ingredient.unit }}
+						</div>
+					</div>
 				{% endfor %}
+				{% else %}
+						<font color="#808080">Pas d'ingrédients trouvés.</font>
+				{% endif %}
 				<br>
 
 				<b> Similar recipes </b>
 				<br>
-				<br>
-				{% for similar_recipe in results.similar_recipes %}
-					<a href="{{ url_for('index', search=similar_recipe) }}"  style="color:#E88309"><p>{{ similar_recipe }} </p></a>
-				{% endfor %}
-
+				{% if results.similar_recipes|length > 0 %}
+					{% for similar_recipe in results.similar_recipes %}
+						<a href="{{ url_for('index', search=similar_recipe) }}"  style="color:#E88309"><p>{{ similar_recipe }} </p></a>
+					{% endfor %}
+				{% else %}
+						<font color="#808080">Pas de recettes similaires trouvées.</font>
+				{% endif %}
 				<br>
 				<br>
 
