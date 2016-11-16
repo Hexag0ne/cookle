@@ -17,11 +17,11 @@ def results():
 	if request.method == 'GET':
 		# search = request.form['search']
 		search = request.args.get('search')
-		print search
 		if search == '': 
 			return render_template('index.html')
 		else:
 			results = recipe_search(query=search)
+			print results
 			'''results = dict(query=search,
 							ingredients=[dict(name="Pomme", quantity=u"5 unités", image_url=u"http://lasantedansmonassiette.com/wp-content/uploads/2012/07/pomme-fruit-prefere.jpg"),
 										dict(name="Beurre", quantity=u"700 grammes", image_url=u"http://www.didier-beurre.fr/images/beurre.jpg"),

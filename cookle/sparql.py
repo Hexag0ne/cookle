@@ -41,7 +41,6 @@ def getDescription(uri, langue="fr"):
     } """)
     spar.setReturnFormat(JSON)
     res = spar.query().convert()
-    print(res)
     if len(res["results"]["bindings"]) == 0:
         return None
     # description can be None
@@ -77,7 +76,7 @@ def getTypeRecette(uri):
 
 def getRecetteSimilaire(uri):
     """Permet de récupérer les recettes similaires"""
-    if uri=None:
+    if not uri:
         return None
     spar = SPARQLWrapper("http://dbpedia.org/sparql")
     uri = "<{}>".format(uri)
@@ -90,15 +89,13 @@ def getRecetteSimilaire(uri):
     list_recettes_similaires=[]
     if len(res["results"]["bindings"]) == 0:
         return None
-    i=0
     for i in range(0,5):
         nom_recette = getNomFrancais(res["results"]["bindings"][i]["s"]["value"] )
-        image_recette = getImage (res["results"]["bindings"][i]["s"]["value"] )
+        image_recette = getImage(res["results"]["bindings"][i]["s"]["value"] )
         list_recettes_similaires.append(dict(nom_recette=nom_recette,image_recette=image_recette))
-        i+=1
 
     recettes_similaire=dict(similar_recipes=list_recettes_similaires)
-    return    recettes_similaire 
+    return recettes_similaire 
 
 if __name__ == "__main__":
     # do stuff if : python sparql.py

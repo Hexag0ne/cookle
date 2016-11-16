@@ -1,6 +1,6 @@
 #local imports
 from recipe_api import getIngredients
-from sparql import getDescription
+from sparql import getDescription, getImage
 
 #external imports
 import requests
@@ -36,7 +36,8 @@ def recipe_search(query=None):
         uri = recipe_res["uri"]
         description_fr = getDescription(uri=uri, langue="fr")
         description_en = getDescription(uri=uri, langue="en")
-        exec_time = str(round(time.time()-t, 2))
+        image_url = getImage(uri=uri)
+        exec_time = round(time.time()-t, 2)
         # search results
         search_results = [dict(
                         title=l["title"], website=l["href"],
@@ -44,7 +45,7 @@ def recipe_search(query=None):
                         )
                         for l,t,d,s in zip(links, types, durations, summaries)]
         results = dict(search_results=search_results, execution_time=exec_time,
-                       query=query, nb_results=len(links),
+                       query=query, nb_results=len(search_results), image_url=image_url,
                        ingredients=list_ingredients, description_en=description_en,
                        description_fr=description_fr,similar_recipes=recettes_similaires)
     return results
