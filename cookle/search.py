@@ -1,14 +1,19 @@
+#local imports
+from recipe_api import getIngredients
+from sparql import getDescription
+
+#external imports
 import requests
 from multiprocessing import Process
 from bs4 import BeautifulSoup
 import re
 import time
 
+
 ACTIVATE_API = False
 if ACTIVATE_API:
     from aylienapiclient import textapi
     client = textapi.Client("18d3d263", "6cb4cddc2c058473fb1984dcc30549ed")
-       
 
 BASE_URL = "http://www.cuistot.org/recherche.php"
 DEFAULT_TIMEOUT = 5
@@ -26,14 +31,22 @@ def recipe_search(query=None):
         soup = BeautifulSoup(result.text, "html.parser")
         links, types, durations = getLinks(soup), getTypes(soup), getDurations(soup)
         summaries = getSummaries(links)
+        recipe_res = getIngredients(query)
+        list_ingredients = recipe_res["list_ingredients"]
+        uri = recipe_res["uri"]
+        description_fr = getDescription(uri=uri, langue="fr")
+        description_en = getDescription(uri=uri, langue="en")
         exec_time = str(round(time.time()-t, 2))
         # search results
         search_results = [dict(
                         title=l["title"], website=l["href"],
-                        type=t, preparation_time=d, summary=s, 
+                        type=t, preparation_time=d, summary=s,
                         )
                         for l,t,d,s in zip(links, types, durations, summaries)]
-        results = dict(search_results=search_results, execution_time=exec_time, query=query, nb_results=len(links))
+        results = dict(search_results=search_results, execution_time=exec_time,
+                       query=query, nb_results=len(links),
+                       ingredients=list_ingredients, description_en=description_en,
+                       description_fr=description_fr)
     return results
 
 def getSummaries(links):

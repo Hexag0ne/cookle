@@ -11,9 +11,10 @@ list_Uri = []
 motcle ='cake'
 """ url de l'api pour faire la recherche, on reçoit un objet JSON """
 """ fichier de retour JSON """
-recette_json={} 
+recette_json={}
 
-requette="https://api.edamam.com/search?q={0}&app_id=0806efd4&app_key=13a926d1babeb8a3726cc3eead90e57c&from=0&to=3".format('cake')
+def getIngredients():
+requette="https://api.edamam.com/search?q={0}&app_id=0806efd4&app_key=13a926d1babeb8a3726cc3eead90e57c&from=0&to=3".format(motcle)
 resultat = requests.get(requette)
 resultat = resultat.json()
 ingredients = resultat['hits'][0]['recipe']['ingredients']
