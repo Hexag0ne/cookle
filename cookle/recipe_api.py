@@ -34,6 +34,7 @@ def getIngredients(recipe):
             else:
                 quantite_ingredient = round(float(quantite_ingredient), 2)
             unite_ingredient = ingredient['measure']
+        image_url, uri_ingredient = None, None
         try:
             annotation = spotlight.annotate('http://spotlight.sztaki.hu:2222/rest/annotate',text=nom_ingredient,confidence=0.1, support=20,spotter='Default')
             uri_ingredient = annotation[0]['URI']
@@ -42,8 +43,8 @@ def getIngredients(recipe):
                 nom_ingredient = getNomFrancais(uri_ingredient)
             except:
                 nom_ingredient = "{} (anglais)".format(nom_ingredient)
-        except spotlight.SpotlightException:
-            uri_ingredient = None
+        except:
+            pass
         if nom_ingredient:
             i += 1
             list_ingredients.append(dict(name=nom_ingredient, quantity=quantite_ingredient, unit=unite_ingredient, uri=uri_ingredient, image_url=image_url))
