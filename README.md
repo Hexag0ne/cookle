@@ -1,5 +1,5 @@
-# Cookle search
-Search engine for recipes : Web platform to provide insightful search results, using Aylien API, DB Spotlight, SPARQL queries and other resources (like a recipe API!).
+# Cookle Search
+**A search engine for recipes** : Web application to provide insightful search results, using Aylien API, DB Spotlight, SPARQL queries and other resources (like a recipe API!).
 
 Install
 -------
