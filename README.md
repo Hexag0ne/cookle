@@ -1,5 +1,5 @@
-# Semantic Web
-Semantic web project where we're creating a web platform to provide insightful search results, using Google Custom Search API, Alchemy API, DB Spotlight, and other resources...
+# Cookle search
+Search engine for recipes : Web platform to provide insightful search results, using Aylien API, DB Spotlight, SPARQL queries and other resources (like a recipe API!).
 
 Install
 -------
@@ -15,5 +15,9 @@ Modules
 + backend: 1 module per part of the processing chain + 1 api
 
 SPARQL :
-+ Récupérer les images des ingrédients. (ingrédients sont des uri -> trouver les uri des images de ces ingrédients)
-+ Récupérer des informations sur la recette (date de création de la recette / image / type[dessert / entrée / plats], note, contrée d'origine)
++ Retrieve ingredients pictures. (Ingredients are uri -> find uri pictures of these ingredients)
++ Retrieve information about the recipe (date of creation of the recipe / picture / type [dessert / entry / dishes], note, home country)
+
+Demo
+-------
+Enjoy a quick demonstration of Cookle : https://www.youtube.com/watch?v=Dgw2djwZzy0
