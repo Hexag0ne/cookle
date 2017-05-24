@@ -20,4 +20,6 @@ SPARQL :
 
 Demo
 -------
-Enjoy a quick demonstration of Cookle : https://www.youtube.com/watch?v=Dgw2djwZzy0
+Enjoy a quick demonstration of Cookle
+
+[![Cookle demonstration](https://img.youtube.com/vi/Dgw2djwZzy0/0.jpg)](http://www.youtube.com/watch?v=Dgw2djwZzy0)
